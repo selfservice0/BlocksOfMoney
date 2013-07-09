@@ -1,8 +1,19 @@
 economy:
   worth_per_block: 0.01
+  #How much do we pay for each block?
+
   on_block_break: true
+  #Do we pay for breaking blocks?
+
   on_block_place: false
+  #Do we pay for placing blocks?
+
   chanced_payout: true
+  #Do we pay based on an X in 100 chance?
+
   percent_chance_to_pay: 10.0
+  #If a random number between 1 and 100 is greater than percent_chance_to_pay, don't pay
+
 internal:
   debug: false
+  #Turn on a plethora of mostly useless blathering debug ranting
