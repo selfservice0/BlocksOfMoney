@@ -1,0 +1,4 @@
+name: BlocksOfMoney
+main: org.minecraftsmp.bom.BlocksOfMoney
+version: 0.1
+depends: [Vault]

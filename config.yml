@@ -1,0 +1,8 @@
+economy:
+  worth_per_block: 0.01
+  on_block_break: true
+  on_block_place: false
+  chanced_payout: true
+  percent_chance_to_pay: 10.0
+internal:
+  debug: false
