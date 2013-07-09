@@ -12,7 +12,7 @@ economy:
   #Do we pay based on an X in 100 chance?
 
   percent_chance_to_pay: 10.0
-  #If a random number between 1 and 100 is greater than percent_chance_to_pay, don't pay
+  #If a random number between 0 and 100 is greater than percent_chance_to_pay, don't pay
 
 internal:
   debug: false
