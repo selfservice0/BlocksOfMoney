@@ -9,4 +9,4 @@ Configuration
 
 Can be configured either to or not to pay on block break or place. Can be
 configured to pay based on an X in 100 chance. Can be configured to pay X
-per block/successful roll.
+per block/successful roll. Can be configured to pay X every Y blocks.

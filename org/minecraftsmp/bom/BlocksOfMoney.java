@@ -10,33 +10,25 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.block.BlockBreakEvent;
-
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 import net.milkbowl.vault.economy.Economy;
 
-public final class BlocksOfMoney extends JavaPlugin implements Listener {
-	private double WORTH_PER_BLOCK;
+import org.minecraftsmp.bom.BlockChangeListener;
+
+public final class BlocksOfMoney extends JavaPlugin {
 	private static Economy economy = null;
-	
-	private boolean onBreak, onPlace;
 	private boolean doDebug;
-	private boolean doChancedPay;
-	
-	private double chanceToPay;
 	
 	public void onEnable() {
 		if (!(Files.exists(Paths.get("plugins/BlocksOfMoney/config.yml")))) {
 			this.saveDefaultConfig();
 			getLogger().info("Generated fresh configuration file.");
 		}
-		
 		doDebug = this.getConfig().getBoolean("internal.debug");
-		debug("Debug messages are ON.");
+		debug("Debug output enabled.");
 		
-        	if (getServer().getPluginManager().getPlugin("Vault") == null) {
+		if (getServer().getPluginManager().getPlugin("Vault") == null) {
 			getLogger().severe("Missing Vault!");
 			getServer().getPluginManager().disablePlugin(this);
 			return;
@@ -51,70 +43,16 @@ public final class BlocksOfMoney extends JavaPlugin implements Listener {
 			debug("Vault Economy detected!");
 		}
 		
-		WORTH_PER_BLOCK = this.getConfig().getDouble("economy.worth_per_block");
-		debug("Each block is worth " + WORTH_PER_BLOCK + ".");
-		
-		onPlace = this.getConfig().getBoolean("economy.on_block_place");
-		debug("Payout on block place is " + onPlace + ".");
-		onBreak = this.getConfig().getBoolean("economy.on_block_break");
-		debug("Payout on block break is " + onBreak + ".");
-		
-		doChancedPay = this.getConfig().getBoolean("economy.chanced_payout");
-		debug("Chanced payout is " + doChancedPay + ".");
-		
-		chanceToPay = this.getConfig().getDouble("economy.percent_chance_to_pay");
-		debug("Chance to pay (decimal): " + chanceToPay + ".");
-		
-		getServer().getPluginManager().registerEvents(this, this);
-		debug("Registered listeners.");
+		getServer().getPluginManager().registerEvents(new BlockChangeListener(this), this);
+		debug("Registered block place and block break listeners.");
 	}
 	
 	public void onDisable() {
-		HandlerList.unregisterAll((Listener)this);
+		HandlerList.unregisterAll(this);
 		debug("Unregistered all owned listeners.");
 	}
 	
 	
-	
-	@EventHandler
-	public void onBlockPlace(BlockPlaceEvent event) {
-		debug("Block place event caught.");
-		if (
-			doChancedPay &&
-			(
-				chanceToPay < (Math.random() * 100)
-			)
-		) {
-			debug("Roll failed, will not pay out.");
-			return;
-		}
-		if (onPlace) {
-			debug("Will pay out.");
-			economy.bankDeposit(event.getPlayer().getName(), WORTH_PER_BLOCK);
-		} else {
-			debug("Will not react to this event.");
-		}
-	}
-	
-	@EventHandler
-	public void onBlockBreak(BlockBreakEvent event) {
-		debug("Block break event caught.");
-		if (
-			doChancedPay &&
-			(
-				chanceToPay < (Math.random() * 100)
-			)
-		) {
-			debug("Roll failed, will not pay out.");
-			return;
-		}
-		if (onBreak) {
-			debug("Will pay out.");
-			economy.bankDeposit(event.getPlayer().getName(), WORTH_PER_BLOCK);
-		} else {
-			debug("Will not react to this event.");
-		}
-	}
 	
 	private boolean setupEconomy() {
 	        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
@@ -125,9 +63,12 @@ public final class BlocksOfMoney extends JavaPlugin implements Listener {
 		return (economy != null);
 	}
 	
-	private void debug(String message) {
+	public void debug(String message) {
 		if (doDebug) {
 			getLogger().info("Debug: " + message);
 		}
 	}
+	
+	public void pay(String player, double amount)
+	{economy.bankDeposit(player, amount);}
 }

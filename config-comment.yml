@@ -1,0 +1,42 @@
+economy:
+  worth_per_block: 0.01
+  #How much are blocks worth?
+
+  on_block_break: true
+  #Do we pay for breaking blocks?
+
+  on_block_place: true
+  #Do we pay for placing blocks?
+
+  pay_after_blocks: 1
+  #After how many blocks should we pay?
+
+  chanced_payout: false
+  #Do we roll the dice to pay rather than do so after X blocks?
+
+  percent_chance_to_pay: 10.0
+  #On what percent chance do we pay?
+
+lang:
+  message_on_pay: false
+  #Do we tell the player we've payed them?
+
+  message: '&2You received &f%money%&2.'
+  #What do we say?
+
+blacklist:
+  use: true
+  #Do we use a blacklist so as not to pay for some blocks?
+
+  use_as_whitelist: false
+  #Do we use this blacklist as a whitelist, so as to only pay for what's on
+  #it? (Blacklist must be enabled to be used as a whitelist.)
+
+  blocks:
+  #What blocks do we pay/not pay for?
+    - LONG_GRASS
+    - YELLOW_FLOWER
+    - RED_ROSE
+internal:
+  debug: false
+  #Do we output unbelievable quantities of debug information?

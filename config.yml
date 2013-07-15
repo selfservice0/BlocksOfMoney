@@ -1,19 +1,19 @@
 economy:
   worth_per_block: 0.01
-  #How much do we pay for each block?
-
   on_block_break: true
-  #Do we pay for breaking blocks?
-
-  on_block_place: false
-  #Do we pay for placing blocks?
-
-  chanced_payout: true
-  #Do we pay based on an X in 100 chance?
-
+  on_block_place: true
+  pay_after_blocks: 1
+  chanced_payout: false
   percent_chance_to_pay: 10.0
-  #If a random number between 0 and 100 is greater than percent_chance_to_pay, don't pay
-
+lang:
+  message_on_pay: false
+  message: '&2You received &f%money%&2.'
+blacklist:
+  use: true
+  use_as_whitelist: false
+  blocks:
+    - LONG_GRASS
+    - YELLOW_FLOWER
+    - RED_ROSE
 internal:
   debug: false
-  #Turn on a plethora of mostly useless blathering debug ranting
