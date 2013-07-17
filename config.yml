@@ -1,5 +1,6 @@
 economy:
   worth_per_block: 0.01
+  random_payout: false
   on_block_break: true
   on_block_place: true
   pay_after_blocks: 1
